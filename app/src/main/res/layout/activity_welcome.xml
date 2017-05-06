@@ -9,39 +9,116 @@
 
     <EditText
         android:id="@+id/msg_text"
-        android:layout_width="280dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/hint_msg"
+        android:hint="Enter Date (Month+Day: ex.0331)"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         />
 
     <Button
         android:id="@+id/send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_text"
+        android:text="show"
         android:onClick="sendMessage"
 
-        android:layout_toRightOf="@+id/msg_text"
-        />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="368dp"
-        android:layout_height="wrap_content"
-        android:onClick="showHell"
-        android:text="Open Window..."
-
-        android:layout_below="@+id/msg_text"
-        />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Message appears here..."
-        android:id="@+id/hell_text_view"
+        android:text="Choose Time period:"
+        android:textAppearance="?android:textAppearanceLarge"
 
-        android:layout_below="@+id/button3"
-         />
+        android:id="@+id/selectTime"
+        android:layout_below="@+id/msg_text"
+        android:layout_alignRight="@+id/send"
+        android:layout_alignEnd="@+id/send" />
+
+
+    <RadioGroup
+        android:id="@+id/timeGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/selectTime">
+
+        <RadioButton
+            android:id="@+id/previous"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1986-2005"
+            />
+
+        <RadioButton
+            android:id="@+id/future"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2040-2069"
+            />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose Climate Model:"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:id="@+id/selectModel"
+
+        android:layout_below="@+id/timeGroup"
+        android:layout_alignLeft="@+id/selectTime"
+        android:layout_alignStart="@+id/selectTime"
+        android:layout_marginTop="15dp" />
+
+
+    <RadioGroup
+        android:id="@+id/modelGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/selectModel">
+
+        <RadioButton
+            android:id="@+id/Can"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CanESM2"
+            />
+
+        <RadioButton
+            android:id="@+id/GFDL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GFDL-ESM2M"
+            />
+
+        <RadioButton
+            android:id="@+id/Had"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HadGEM2-ES"
+            />
+
+        <RadioButton
+            android:id="@+id/IPSL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="IPSL-CM5A-LA"
+            />
+
+        <RadioButton
+            android:id="@+id/MPI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MPI-ESM-MR"
+            />
+    </RadioGroup>
 
 
 </RelativeLayout>
