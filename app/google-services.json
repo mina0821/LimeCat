@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "635232377844",
+    "firebase_url": "https://limecatapplication.firebaseio.com",
+    "project_id": "limecatapplication",
+    "storage_bucket": "limecatapplication.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635232377844:android:6abe1c280195d0f7",
+        "android_client_info": {
+          "package_name": "com.example.mina.limecatapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "635232377844-5rv3016n70ps50djfbid0nermmnhb9ni.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrBHCkeLflEoHWGY6Czb9JgdyOFqst4Vc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
