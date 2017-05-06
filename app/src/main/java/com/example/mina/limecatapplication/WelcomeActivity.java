@@ -26,8 +26,9 @@ import au.com.bytecode.opencsv.CSVReader;
 public class WelcomeActivity extends AppCompatActivity {
     //define textview and msg variables
     TextView textView;
-    EditText msg_text;
-    public final static String MSG_KEY = "Date";
+    EditText msg_text_date;
+    EditText msg_text_month;
+    EditText msg_text_year;
 
     //define radio button variables
     private RadioGroup radioTimeGroup;
@@ -98,6 +99,8 @@ public class WelcomeActivity extends AppCompatActivity {
                     //read the file temp.csv
                     try{
                         CSVReader reader = new CSVReader(new FileReader(localFile));
+                        //skip the first two line
+                        next = reader.readNext();next = reader.readNext();
                         while(true) {
                             next = reader.readNext();
                             if(next != null) {
@@ -131,6 +134,8 @@ public class WelcomeActivity extends AppCompatActivity {
                     //read the file temp.csv
                     try{
                         CSVReader reader = new CSVReader(new FileReader(localFile));
+                        //skip the first two line
+                        next = reader.readNext();next = reader.readNext();
                         while(true) {
                             next = reader.readNext();
                             if(next != null) {
@@ -157,14 +162,23 @@ public class WelcomeActivity extends AppCompatActivity {
 
     //after we hit show button
     public void sendMessage(View view){
-        //store the msg in the text box
-        msg_text = (EditText)findViewById(R.id.msg_text);
-        String msg = msg_text.getText().toString();
+        //store the msg into a string variable
+        msg_text_date = (EditText)findViewById(R.id.msg_text_date);
+        String msg_date = msg_text_date.getText().toString();
+
+        msg_text_month = (EditText)findViewById(R.id.msg_text_month);
+        String msg_month = msg_text_month.getText().toString();
+
+        msg_text_year = (EditText)findViewById(R.id.msg_text_year);
+        String msg_year = msg_text_year.getText().toString();
+
+        //combine all the date information
+        String msg = msg_date+"-"+msg_month+"-"+msg_year;
 
         //call second window
         Intent intent = new Intent(this,SecondActivity.class);
         //input the msg we get
-        intent.putExtra(MSG_KEY,msg);
+        intent.putExtra("DATE",msg);
 
         //get the selection of time period
         RadioButton rb = (RadioButton) radioTimeGroup.findViewById(radioTimeGroup.getCheckedRadioButtonId());
@@ -178,8 +192,16 @@ public class WelcomeActivity extends AppCompatActivity {
         intent.putExtra("Time",time);
         intent.putExtra("Model",model);
 
+        //use FindVal module to find the corresponding value
+        FindVal find = new FindVal(list_temp,list_preci);
+        String r1 = find.searchTemp(msg,time,model);
+        String r2 = find.searchPreci(msg,time,model);
+        //forward to second activity
+        intent.putExtra("RESULT_TEMP",r1);
+        intent.putExtra("RESULT_PRECI",r2);
+
         //only for test purpose
-        textView.setText(list_preci.get(12)[1]);
+        //textView.setText(r);
 
         //start the activity
         startActivity(intent);

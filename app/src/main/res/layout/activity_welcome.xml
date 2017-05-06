@@ -7,16 +7,44 @@
     android:orientation="horizontal"
     tools:context="com.example.mina.limecatapplication.WelcomeActivity">
 
-    <EditText
-        android:id="@+id/msg_text"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Enter Date (Month+Day: ex.0331)"
+        android:id="@+id/datemsg"
+        android:text="Enter Date"
+        android:textAppearance="?android:textAppearanceLarge"
+
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/selectTime"
+        android:layout_alignStart="@+id/selectTime"
+        android:layout_marginTop="13dp" />
+
+    <EditText
+        android:id="@+id/msg_text_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Enter date (ex.19)"
+
+        android:layout_below="@+id/datemsg"
+        />
+
+    <EditText
+        android:id="@+id/msg_text_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Enter month (ex.12)"
+
+        android:layout_toRightOf="@+id/msg_text_date"
+        android:layout_alignBottom="@+id/msg_text_date"
+        />
+
+    <EditText
+        android:id="@+id/msg_text_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Enter year (ex.1985)"
+
+        android:layout_below="@+id/msg_text_date"
         />
 
     <Button
@@ -27,8 +55,7 @@
         android:onClick="sendMessage"
 
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp" />
+        android:layout_centerHorizontal="true" />
 
 
     <TextView
@@ -38,7 +65,7 @@
         android:textAppearance="?android:textAppearanceLarge"
 
         android:id="@+id/selectTime"
-        android:layout_below="@+id/msg_text"
+        android:layout_below="@+id/msg_text_year"
         android:layout_alignRight="@+id/send"
         android:layout_alignEnd="@+id/send" />
 

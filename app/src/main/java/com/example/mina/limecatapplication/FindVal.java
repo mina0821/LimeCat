@@ -20,6 +20,39 @@ public class FindVal {
 
     //search through the dataset
     public String searchTemp(String date, String time, String model){
-        return null;
+        //iterate each line of the list
+        for (String[] line:list_temp){
+            //check if date matches
+            if (line[0].equals(date)){
+                //check if time period matches
+                if (line[2].equals(time)){
+                    //check if climate model matches
+                    if (line[3].equals(model)){
+                        //All mathces. return the value
+                        return line[1];
+                    }
+                }
+            }
+        }
+        return "Data does not exist";
+    }
+
+    //search through the dataset
+    public String searchPreci(String date, String time, String model){
+        //iterate each line of the list
+        for (String[] line:list_preci){
+            //check if date matches
+            if (line[0].equals(date)){
+                //check if time period matches
+                if (line[2].equals(time)){
+                    //check if climate model matches
+                    if (line[3].equals(model)){
+                        //All mathces. return the value
+                        return line[1];
+                    }
+                }
+            }
+        }
+        return "Data does not exist";
     }
 }
