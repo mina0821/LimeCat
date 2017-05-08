@@ -174,7 +174,10 @@ public class WelcomeActivity extends AppCompatActivity {
 
         //combine all the date information
         String msg = msg_date+"-"+msg_month+"-"+msg_year;
-
+        String[] msg10 = new String[10];//create a string info for 10 years after the selected year
+        for(int i=0;i<10;i++){
+            msg10[i]=msg_date+"-"+msg_month+"-"+(Integer.parseInt(msg_year)+i);
+        }
         //call second window
         Intent intent = new Intent(this,SecondActivity.class);
         //input the msg we get
@@ -199,7 +202,19 @@ public class WelcomeActivity extends AppCompatActivity {
         //forward to second activity
         intent.putExtra("RESULT_TEMP",r1);
         intent.putExtra("RESULT_PRECI",r2);
+        String[] tempstring = new String[10];
+        String[] precistring = new String[10];
+        //String temptotal = null;
+        //String precitotal = null;
+        for(int i =0;i<10;i++){
+            tempstring[i] = find.searchTemp(msg10[i],time,model);
+            precistring[i] = find.searchPreci(msg10[i],time,model);
+            //temptotal = temptotal+"\n"+tempstring[i];
+            //precitotal = precitotal+"\n"+precistring[i];
+        }
 
+        intent.putExtra("RESULT_TEMPTOTAL",tempstring);
+        intent.putExtra("RESULT_PRECITOTAL",precistring);
         //only for test purpose
         //textView.setText(r);
 
