@@ -17,10 +17,16 @@ import org.achartengine.renderer.XYSeriesRenderer;
 
 
 public class SecondActivity extends Activity {
+    //define textview and msg variables
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //locate the textview box we want to show the result
+        textView = (TextView)findViewById(R.id.info);
+
         setContentView(R.layout.second_layout);
         //drawChart();
         //get the user input message
@@ -31,8 +37,9 @@ public class SecondActivity extends Activity {
         //get the corresponding value in the dataset
         String result_temp = intent.getStringExtra("RESULT_TEMP");
         String result_preci = intent.getStringExtra("RESULT_PRECI");
-        String[] temp_total = intent.getStringArrayExtra("RESULT_TEMPTOTAL");
-        String[] preci_total = intent.getStringArrayExtra("RESULT_PRECITOTAL");
+
+        String[] temp_total = intent.getStringArrayExtra("RESULT_TEMP_LIST");
+        String[] preci_total = intent.getStringArrayExtra("RESULT_PRECI_LIST");
         double[] temp_val = new double[10];
         double[] preci_val = new double[10];
         for(int i = 0;i<10;i++){
@@ -61,11 +68,16 @@ public class SecondActivity extends Activity {
         //setContentView(textView);
 
         //setContentView(R.layout.second_layout);
+
+        //Error waiting to be fixed
+        //textView.setText("Description: This is the graph of data for ten years.");
     }
     private void drawChart(double[] temperature, double[] precipitation) {
         int[] x_values = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         double[] y_values = temperature;
         double[] y2_values = precipitation;
+
+        //create two lines
         XYSeries tempSeries = new XYSeries("Temp");
         for (int i = 0; i < x_values.length; i++) {
             tempSeries.add(x_values[i], y_values[i]);
@@ -74,31 +86,43 @@ public class SecondActivity extends Activity {
         for (int i = 0; i < x_values.length; i++) {
             preciSeries.add(x_values[i], y2_values[i]);
         }
+
         XYMultipleSeriesDataset Dataset = new XYMultipleSeriesDataset();
         Dataset.addSeries(tempSeries);
         Dataset.addSeries(preciSeries);
+
+        //define the first line features
         XYSeriesRenderer renderer = new XYSeriesRenderer();
         renderer.setColor(Color.RED);
         renderer.setPointStyle(PointStyle.CIRCLE);
         renderer.setFillPoints(true);
         renderer.setLineWidth(3);
         renderer.setDisplayChartValues(true);
+        renderer.setChartValuesTextSize(30);
+
+        //define the second line features
         XYSeriesRenderer renderer2 = new XYSeriesRenderer();
-        renderer2.setColor(Color.RED);
+        renderer2.setColor(Color.BLUE);
         renderer2.setPointStyle(PointStyle.CIRCLE);
         renderer2.setFillPoints(true);
         renderer2.setLineWidth(3);
         renderer2.setDisplayChartValues(true);
+        renderer2.setChartValuesTextSize(30);
+
+        //combine two liens and set feature for the whole
         XYMultipleSeriesRenderer multiRenderer = new XYMultipleSeriesRenderer();
-        multiRenderer.setXLabels(0);
+        multiRenderer.setXLabels(10);
+        multiRenderer.setLabelsTextSize(36);
         multiRenderer.setChartTitle("Temp/Precipitation Chart");
+        multiRenderer.setChartTitleTextSize(72);
+        multiRenderer.setAxisTitleTextSize(48);
         multiRenderer.setXTitle("10 year period");
         multiRenderer.setYTitle("Temp/Precipitation");
         multiRenderer.setZoomButtonsVisible(true);
-
-// Adding expenseRenderer to multipleRenderer<br />
         multiRenderer.addSeriesRenderer(renderer);
         multiRenderer.addSeriesRenderer(renderer2);
+
+        //graph number one lauyout defined
         LinearLayout chartContainer = (LinearLayout) findViewById(R.id.chart_container);
         View chart = ChartFactory.getLineChartView(getBaseContext(), Dataset, multiRenderer);
         chartContainer.addView(chart);
