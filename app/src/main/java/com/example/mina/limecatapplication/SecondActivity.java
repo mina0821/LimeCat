@@ -32,7 +32,6 @@ public class SecondActivity extends Activity {
         //get the user input message
         Intent intent = getIntent();
         String msg1 = intent.getStringExtra("DATE");
-        String msg2 = intent.getStringExtra("Time");
         String msg3 = intent.getStringExtra("Model");
         //get the corresponding value in the dataset
         String result_temp = intent.getStringExtra("RESULT_TEMP");

@@ -61,47 +61,12 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose Time period:"
-        android:textAppearance="?android:textAppearanceLarge"
-
-        android:id="@+id/selectTime"
-        android:layout_below="@+id/msg_text_year"
-        android:layout_alignRight="@+id/send"
-        android:layout_alignEnd="@+id/send" />
-
-
-    <RadioGroup
-        android:id="@+id/timeGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/selectTime">
-
-        <RadioButton
-            android:id="@+id/previous"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1986-2005"
-            />
-
-        <RadioButton
-            android:id="@+id/future"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2040-2069"
-            />
-    </RadioGroup>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="Choose Climate Model:"
         android:textAppearance="?android:textAppearanceLarge"
         android:id="@+id/selectModel"
 
-        android:layout_below="@+id/timeGroup"
-        android:layout_alignLeft="@+id/selectTime"
-        android:layout_alignStart="@+id/selectTime"
-        android:layout_marginTop="15dp" />
+        android:layout_below="@+id/msg_text_year"
+        />
 
 
     <RadioGroup
@@ -109,7 +74,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:layout_below="@+id/selectModel">
+        android:layout_below="@+id/selectModel"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <RadioButton
             android:id="@+id/Can"

@@ -31,7 +31,6 @@ public class WelcomeActivity extends AppCompatActivity {
     EditText msg_text_year;
 
     //define radio button variables
-    private RadioGroup radioTimeGroup;
     private RadioGroup radioModelGroup;
 
     //define firebase variables
@@ -62,20 +61,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     public void addListenerOnButton(){
-        radioTimeGroup = (RadioGroup) findViewById(R.id.timeGroup);
         radioModelGroup = (RadioGroup) findViewById(R.id.modelGroup);
-
-        //attach listener to radio group
-        radioTimeGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                //get the right button which is clicked
-                RadioButton rb = (RadioButton) group.findViewById(checkedId);
-                if (null != rb && checkedId > -1){
-                    Toast.makeText(WelcomeActivity.this, rb.getText(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
         //attach listener to radio group
         radioModelGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
@@ -187,22 +173,17 @@ public class WelcomeActivity extends AppCompatActivity {
         //input the msg we get
         intent.putExtra("DATE",msg);
 
-        //get the selection of time period
-        RadioButton rb = (RadioButton) radioTimeGroup.findViewById(radioTimeGroup.getCheckedRadioButtonId());
-        String time = (String) rb.getText();
 
         //get the selection of climate model
         RadioButton rb2 = (RadioButton) radioModelGroup.findViewById(radioModelGroup.getCheckedRadioButtonId());
         String model = (String) rb2.getText();
 
-        //input the selection we get
-        intent.putExtra("Time",time);
         intent.putExtra("Model",model);
 
         //use FindVal module to find the corresponding value
         FindVal find = new FindVal(list_temp,list_preci);
-        String r1 = find.searchTemp(msg,time,model);
-        String r2 = find.searchPreci(msg,time,model);
+        String r1 = find.searchTemp(msg,model);
+        String r2 = find.searchPreci(msg,model);
         //forward to second activity
         intent.putExtra("RESULT_TEMP",r1);
         intent.putExtra("RESULT_PRECI",r2);
@@ -212,8 +193,8 @@ public class WelcomeActivity extends AppCompatActivity {
         //String temptotal = null;
         //String precitotal = null;
         for(int i =0;i<10;i++){
-            tempstring[i] = find.searchTemp(msg10[i],time,model);
-            precistring[i] = find.searchPreci(msg10[i],time,model);
+            tempstring[i] = find.searchTemp(msg10[i],model);
+            precistring[i] = find.searchPreci(msg10[i],model);
             //temptotal = temptotal+"\n"+tempstring[i];
             //precitotal = precitotal+"\n"+precistring[i];
         }
