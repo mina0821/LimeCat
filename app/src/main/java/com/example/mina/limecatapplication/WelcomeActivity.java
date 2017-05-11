@@ -48,7 +48,7 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         //locate the textview box we want to show the result
-        textView = (TextView)findViewById(R.id.selectTime);
+        textView = (TextView) findViewById(R.id.selectModel);
 
         //add a listener to the radio button group
         addListenerOnButton();
@@ -60,38 +60,39 @@ public class WelcomeActivity extends AppCompatActivity {
         readAnotherFile();
     }
 
-    public void addListenerOnButton(){
+    public void addListenerOnButton() {
         radioModelGroup = (RadioGroup) findViewById(R.id.modelGroup);
 
         //attach listener to radio group
-        radioModelGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
+        radioModelGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 //get the right button which is clicked
                 RadioButton rb = (RadioButton) group.findViewById(checkedId);
-                if (null != rb && checkedId > -1){
+                if (null != rb && checkedId > -1) {
                     Toast.makeText(WelcomeActivity.this, rb.getText(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    public void readfile(){
+    public void readfile() {
         try {
             final File localFile = File.createTempFile("temp", "csv");
             storageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                     //read the file temp.csv
-                    try{
+                    try {
                         CSVReader reader = new CSVReader(new FileReader(localFile));
                         //skip the first two line
-                        next = reader.readNext();next = reader.readNext();
-                        while(true) {
+                        next = reader.readNext();
+                        next = reader.readNext();
+                        while (true) {
                             next = reader.readNext();
-                            if(next != null) {
+                            if (next != null) {
                                 list_temp.add(next);
-                            } else{
+                            } else {
                                 break;
                             }
                         }
@@ -106,27 +107,28 @@ public class WelcomeActivity extends AppCompatActivity {
                     //do nothing
                 }
             });
-        } catch (IOException e){
+        } catch (IOException e) {
             //do nothing
         }
     }
 
-    public void readAnotherFile(){
+    public void readAnotherFile() {
         try {
             final File localFile = File.createTempFile("temp", "csv");
             storageRef2.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                     //read the file temp.csv
-                    try{
+                    try {
                         CSVReader reader = new CSVReader(new FileReader(localFile));
                         //skip the first two line
-                        next = reader.readNext();next = reader.readNext();
-                        while(true) {
+                        next = reader.readNext();
+                        next = reader.readNext();
+                        while (true) {
                             next = reader.readNext();
-                            if(next != null) {
+                            if (next != null) {
                                 list_preci.add(next);
-                            } else{
+                            } else {
                                 break;
                             }
                         }
@@ -141,66 +143,77 @@ public class WelcomeActivity extends AppCompatActivity {
                     //do nothing
                 }
             });
-        } catch (IOException e){
+        } catch (IOException e) {
             //do nothing
         }
     }
 
     //after we hit show button
-    public void sendMessage(View view){
+    public void sendMessage(View view) {
         //store the msg into a string variable
-        msg_text_date = (EditText)findViewById(R.id.msg_text_date);
+        msg_text_date = (EditText) findViewById(R.id.msg_text_date);
         String msg_date = msg_text_date.getText().toString();
 
-        msg_text_month = (EditText)findViewById(R.id.msg_text_month);
+        msg_text_month = (EditText) findViewById(R.id.msg_text_month);
         String msg_month = msg_text_month.getText().toString();
 
-        msg_text_year = (EditText)findViewById(R.id.msg_text_year);
+        msg_text_year = (EditText) findViewById(R.id.msg_text_year);
         String msg_year = msg_text_year.getText().toString();
 
         //combine all the date information
-        String msg = msg_date+"-"+msg_month+"-"+msg_year;
+        String msg = msg_date + "-" + msg_month + "-" + msg_year;
 
         //create a string info for 10 years after the selected year
-        String[] msg10 = new String[10];
-        for(int i=0;i<10;i++){
+        String[] msg20 = new String[20];
+        for (int i = 0; i < 20; i++) {
             //add the String of date
-            msg10[i]=msg_date+"-"+msg_month+"-"+(Integer.parseInt(msg_year)+i);
+            msg20[i] = msg_date + "-" + msg_month + "-" + (Integer.parseInt(msg_year) + i);
+        }
+        String[] msghistory20 = new String[20];
+        for (int i = 0; i < 20; i++) {
+            msghistory20[i] = msg_date + "-" + msg_month + "-" + (1986 + i);
+
         }
 
         //call second window
-        Intent intent = new Intent(this,SecondActivity.class);
+        Intent intent = new Intent(this, SecondActivity.class);
         //input the msg we get
-        intent.putExtra("DATE",msg);
+        intent.putExtra("DATE", msg);
 
 
         //get the selection of climate model
         RadioButton rb2 = (RadioButton) radioModelGroup.findViewById(radioModelGroup.getCheckedRadioButtonId());
         String model = (String) rb2.getText();
 
-        intent.putExtra("Model",model);
+        intent.putExtra("Model", model);
 
         //use FindVal module to find the corresponding value
-        FindVal find = new FindVal(list_temp,list_preci);
-        String r1 = find.searchTemp(msg,model);
-        String r2 = find.searchPreci(msg,model);
+        FindVal find = new FindVal(list_temp, list_preci);
+        String r1 = find.searchTemp(msg, model);
+        String r2 = find.searchPreci(msg, model);
         //forward to second activity
-        intent.putExtra("RESULT_TEMP",r1);
-        intent.putExtra("RESULT_PRECI",r2);
+        intent.putExtra("RESULT_TEMP", r1);
+        intent.putExtra("RESULT_PRECI", r2);
 
-        String[] tempstring = new String[10];
-        String[] precistring = new String[10];
+        String[] tempstring = new String[20];
+        String[] precistring = new String[20];
+        String[] temphistory = new String[20];
+        String[] precihistory = new String[20];
         //String temptotal = null;
         //String precitotal = null;
-        for(int i =0;i<10;i++){
-            tempstring[i] = find.searchTemp(msg10[i],model);
-            precistring[i] = find.searchPreci(msg10[i],model);
+        for (int i = 0; i < 20; i++) {
+            tempstring[i] = find.searchTemp(msg20[i], model);
+            precistring[i] = find.searchPreci(msg20[i], model);
+            temphistory[i] = find.searchTemp(msghistory20[i],model);
+            precihistory[i] = find.searchPreci(msghistory20[i], model);
             //temptotal = temptotal+"\n"+tempstring[i];
             //precitotal = precitotal+"\n"+precistring[i];
         }
 
-        intent.putExtra("RESULT_TEMP_LIST",tempstring);
-        intent.putExtra("RESULT_PRECI_LIST",precistring);
+        intent.putExtra("RESULT_TEMP_LIST", tempstring);
+        intent.putExtra("RESULT_PRECI_LIST", precistring);
+        intent.putExtra("RESULT_TEMP_History", temphistory);
+        intent.putExtra("RESULT_PRECI_History", precihistory);
         //only for test purpose
         //textView.setText(r);
 

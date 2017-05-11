@@ -15,9 +15,9 @@
         android:textAppearance="?android:textAppearanceLarge"
 
         android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/selectTime"
-        android:layout_alignStart="@+id/selectTime"
         android:layout_marginTop="13dp" />
+
+
 
     <EditText
         android:id="@+id/msg_text_date"

@@ -39,19 +39,25 @@ public class SecondActivity extends Activity {
 
         String[] temp_total = intent.getStringArrayExtra("RESULT_TEMP_LIST");
         String[] preci_total = intent.getStringArrayExtra("RESULT_PRECI_LIST");
-        double[] temp_val = new double[10];
-        double[] preci_val = new double[10];
-        for(int i = 0;i<10;i++){
+        String[] temp_history = intent.getStringArrayExtra("RESULT_TEMP_History");
+        String[] preci_history = intent.getStringArrayExtra("RESULT_PRECI_History");
+        double[] temp_val = new double[20];
+        double[] preci_val = new double[20];
+        double[] temp_historyval = new double[20];
+        double[] preci_historyval = new double[20];
+        for(int i = 0;i<20;i++){
             temp_val[i]= Double.parseDouble(temp_total[i]);
             preci_val[i]= Double.parseDouble(preci_total[i]);
+            temp_historyval[i]= Double.parseDouble(temp_history[i]);
+            preci_historyval[i]= Double.parseDouble(preci_history[i]);
         }
         String temptotal = "";
         String precitotal ="";
-        for(int i = 0;i<10;i++){
+        for(int i = 0;i<20;i++){
             temptotal = temptotal+temp_total[i]+"\n";
             precitotal = precitotal+preci_total[i]+"\n";
         }
-        drawChart(temp_val,preci_val);
+        drawChart(temp_val,preci_val,temp_historyval,preci_historyval);
         //formulize the whole string message
         //String input_info = String.format("Input Information\nDate: %s\nTime Period: %s\nClimate Model: %s\n", msg1, msg2, msg3);
         //String output_info = String.format("\nOutput Information\nMean temperature: %s\nPrecipitation: %s", result_temp, result_preci);
@@ -71,10 +77,12 @@ public class SecondActivity extends Activity {
         //Error waiting to be fixed
         //textView.setText("Description: This is the graph of data for ten years.");
     }
-    private void drawChart(double[] temperature, double[] precipitation) {
-        int[] x_values = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    private void drawChart(double[] temperature, double[] precipitation, double[] temperaturehistory, double[] precipitationhistory) {
+        int[] x_values = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11,12,13,14,15,16,17,18,19,20};
         double[] y_values = temperature;
         double[] y2_values = precipitation;
+        double[] y3_values = temperaturehistory;
+        double[] y4_values = precipitationhistory;
 
         //create two lines
         XYSeries tempSeries = new XYSeries("Temp");
@@ -86,9 +94,20 @@ public class SecondActivity extends Activity {
             preciSeries.add(x_values[i], y2_values[i]);
         }
 
+        XYSeries temphistorySeries = new XYSeries("Temphistory");
+        for (int i = 0; i < x_values.length; i++) {
+            temphistorySeries.add(x_values[i], y3_values[i]);
+        }
+        XYSeries precihistorySeries = new XYSeries("Precihistory");
+        for (int i = 0; i < x_values.length; i++) {
+            precihistorySeries.add(x_values[i], y4_values[i]);
+        }
+
         XYMultipleSeriesDataset Dataset = new XYMultipleSeriesDataset();
         Dataset.addSeries(tempSeries);
         Dataset.addSeries(preciSeries);
+        Dataset.addSeries(temphistorySeries);
+        Dataset.addSeries(precihistorySeries);
 
         //define the first line features
         XYSeriesRenderer renderer = new XYSeriesRenderer();
@@ -108,18 +127,36 @@ public class SecondActivity extends Activity {
         renderer2.setDisplayChartValues(true);
         renderer2.setChartValuesTextSize(30);
 
+        XYSeriesRenderer renderer3 = new XYSeriesRenderer();
+        renderer3.setColor(Color.YELLOW);
+        renderer3.setPointStyle(PointStyle.CIRCLE);
+        renderer3.setFillPoints(true);
+        renderer3.setLineWidth(3);
+        renderer3.setDisplayChartValues(true);
+        renderer3.setChartValuesTextSize(30);
+
+        XYSeriesRenderer renderer4 = new XYSeriesRenderer();
+        renderer4.setColor(Color.WHITE);
+        renderer4.setPointStyle(PointStyle.CIRCLE);
+        renderer4.setFillPoints(true);
+        renderer4.setLineWidth(3);
+        renderer4.setDisplayChartValues(true);
+        renderer4.setChartValuesTextSize(30);
+
         //combine two liens and set feature for the whole
         XYMultipleSeriesRenderer multiRenderer = new XYMultipleSeriesRenderer();
-        multiRenderer.setXLabels(10);
+        multiRenderer.setXLabels(20);
         multiRenderer.setLabelsTextSize(36);
         multiRenderer.setChartTitle("Temp/Precipitation Chart");
         multiRenderer.setChartTitleTextSize(72);
         multiRenderer.setAxisTitleTextSize(48);
-        multiRenderer.setXTitle("10 year period");
+        multiRenderer.setXTitle("20 year period");
         multiRenderer.setYTitle("Temp/Precipitation");
         multiRenderer.setZoomButtonsVisible(true);
         multiRenderer.addSeriesRenderer(renderer);
         multiRenderer.addSeriesRenderer(renderer2);
+        multiRenderer.addSeriesRenderer(renderer3);
+        multiRenderer.addSeriesRenderer(renderer4);
 
         //graph number one lauyout defined
         LinearLayout chartContainer = (LinearLayout) findViewById(R.id.chart_container);
