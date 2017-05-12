@@ -68,7 +68,7 @@
         android:layout_below="@+id/future"
         android:layout_centerHorizontal="true"
         android:onClick="showCompare"
-        android:text="Compare" />
+        android:text="Combine" />
 
 
 </RelativeLayout>

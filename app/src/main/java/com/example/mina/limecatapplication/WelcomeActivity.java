@@ -23,6 +23,7 @@ import java.util.List;
 import au.com.bytecode.opencsv.CSVReader;
 
 
+
 public class WelcomeActivity extends AppCompatActivity {
     //define textview and msg variables
     TextView textView;
@@ -34,11 +35,15 @@ public class WelcomeActivity extends AppCompatActivity {
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReferenceFromUrl("gs://limecatapplication.appspot.com/").child("meanTemp_modelaverage.csv");
     StorageReference storageRef2 = storage.getReferenceFromUrl("gs://limecatapplication.appspot.com/").child("precipitation_modelaverage.csv");
+    StorageReference storageRef3 = storage.getReferenceFromUrl("gs://limecatapplication.appspot.com/").child("Temp_monthaverage.csv");
+    StorageReference storageRef4 = storage.getReferenceFromUrl("gs://limecatapplication.appspot.com/").child("precipitation_monthaverage.csv");
 
     //define variables to store the cloud dataset
     String next[] = {};
     List<String[]> list_temp = new ArrayList<String[]>();
     List<String[]> list_preci = new ArrayList<String[]>();
+    List<String[]> list_avg_temp = new ArrayList<String[]>();
+    List<String[]> list_avg_preci = new ArrayList<String[]>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +57,9 @@ public class WelcomeActivity extends AppCompatActivity {
 
         //read the file precipication.csv store in the firebase
         readAnotherFile();
+
     }
+
 
     public void readfile(){
         try {
@@ -69,6 +76,37 @@ public class WelcomeActivity extends AppCompatActivity {
                             next = reader.readNext();
                             if(next != null) {
                                 list_temp.add(next);
+                            } else{
+                                break;
+                            }
+                        }
+                    } catch (IOException e) {
+                        //display error message
+                        textView.setText("File not found");
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    //do nothing
+                }
+            });
+        } catch (IOException e){
+            //do nothing
+        }
+
+        try {
+            final File localFile = File.createTempFile("temp2", "csv");
+            storageRef3.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    //read the file temp.csv
+                    try{
+                        CSVReader reader = new CSVReader(new FileReader(localFile));
+                        while(true) {
+                            next = reader.readNext();
+                            if(next != null) {
+                                list_avg_temp.add(next);
                             } else{
                                 break;
                             }
@@ -104,6 +142,37 @@ public class WelcomeActivity extends AppCompatActivity {
                             next = reader.readNext();
                             if(next != null) {
                                 list_preci.add(next);
+                            } else{
+                                break;
+                            }
+                        }
+                    } catch (IOException e) {
+                        //display error message
+                        textView.setText("File not found");
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    //do nothing
+                }
+            });
+        } catch (IOException e){
+            //do nothing
+        }
+
+        try {
+            final File localFile = File.createTempFile("temp2", "csv");
+            storageRef4.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    //read the file temp.csv
+                    try{
+                        CSVReader reader = new CSVReader(new FileReader(localFile));
+                        while(true) {
+                            next = reader.readNext();
+                            if(next != null) {
+                                list_avg_preci.add(next);
                             } else{
                                 break;
                             }
@@ -168,6 +237,7 @@ public class WelcomeActivity extends AppCompatActivity {
         intent.putExtra("RESULT_LIST",presentstring);
         intent.putExtra("RESULT_FUTURE_LIST",futurestring);
         intent.putExtra("TYPE","mean temperature");
+        intent.putExtra("AVG",findAvgTemp(msg_month,msg_year));
         //only for test purpose
         //textView.setText(r);
 
@@ -221,12 +291,34 @@ public class WelcomeActivity extends AppCompatActivity {
         intent.putExtra("RESULT_LIST",presentstring);
         intent.putExtra("RESULT_FUTURE_LIST",futurestring);
         intent.putExtra("TYPE","precipitation");
+        intent.putExtra("AVG",findAvgPreci(msg_month,msg_year));
+
         //only for test purpose
         //textView.setText(r);
 
 
         //start the activity
         startActivity(intent);
+    }
+
+    public String findAvgPreci(String month,String year){
+        String msg = month+"-"+year;
+        for(String[] line:list_avg_preci){
+            if (line[0].equals(msg)){
+                return line[1];
+            }
+        }
+        return "0";
+    }
+
+    public String findAvgTemp(String month,String year){
+        String msg = month+"-"+year;
+        for(String[] line:list_avg_temp){
+            if (line[0].equals(msg)){
+                return line[1];
+            }
+        }
+        return "0";
     }
 
 }

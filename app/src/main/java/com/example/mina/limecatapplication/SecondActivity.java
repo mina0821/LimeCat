@@ -19,6 +19,12 @@ import java.io.FileReader;
 
 import au.com.bytecode.opencsv.CSVReader;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class SecondActivity extends Activity {
     //define textview and msg variables
@@ -26,6 +32,8 @@ public class SecondActivity extends Activity {
     double[] list_val;
     double[] list_future;
     String type;
+    String avg;
+    List<String[]> list_avg = new ArrayList<String[]>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +44,7 @@ public class SecondActivity extends Activity {
         Intent intent = getIntent();
         String[] list_total = intent.getStringArrayExtra("RESULT_LIST");
         String[] list_future_total = intent.getStringArrayExtra("RESULT_FUTURE_LIST");
+        avg = intent.getStringExtra("AVG");
         type = intent.getStringExtra("TYPE");
 
         //parse the whole list into double list
@@ -55,9 +64,7 @@ public class SecondActivity extends Activity {
         draw2Chart(list_val,list_future,chartContainer);
     }
 
-    public void readfile(){
-        //CSVReader reader = new CSVReader(new FileReader());
-    }
+
 
     public void showPresent(View view){
         LinearLayout layout1 = (LinearLayout) findViewById(R.id.chart_future);
@@ -76,8 +83,9 @@ public class SecondActivity extends Activity {
 
         //create a string to display
         String msg_type="Description:\n This is the graph of "+type;
-        String msg_graph="in current time frame";
-        textView.setText(msg_type+msg_graph);
+        String msg_graph=" in current time frame";
+        String msg_avg="\n This average "+type+" this month is "+avg;
+        textView.setText(msg_type+msg_graph+msg_avg);
     }
 
     public void showFuture(View view){
@@ -93,8 +101,9 @@ public class SecondActivity extends Activity {
 
         //create a string to display
         String msg_type="Description:\n This is the graph of "+type;
-        String msg_graph="in future time frame";
-        textView.setText(msg_type+msg_graph);
+        String msg_graph=" in future time frame";
+        String msg_avg="\n This average "+type+" this month is "+avg;
+        textView.setText(msg_type+msg_graph+msg_avg);
     }
 
     public void showCompare(View view){
@@ -111,7 +120,8 @@ public class SecondActivity extends Activity {
         //create a string to display
         String msg_type="Description:\n This is the graph of "+type;
         String msg_graph=" in both time frame";
-        textView.setText(msg_type+msg_graph);
+        String msg_avg="\n This average "+type+" this month is "+avg;
+        textView.setText(msg_type+msg_graph+msg_avg);
     }
 
 
