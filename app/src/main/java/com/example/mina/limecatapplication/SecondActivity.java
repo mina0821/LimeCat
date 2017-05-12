@@ -34,12 +34,19 @@ public class SecondActivity extends Activity {
     String type;
     String avg;
     List<String[]> list_avg = new ArrayList<String[]>();
+    LinearLayout layout1;
+    LinearLayout layout2;
+    LinearLayout layout3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.second_layout);
+
+        layout1 = (LinearLayout) findViewById(R.id.chart_future);
+        layout2 = (LinearLayout) findViewById(R.id.chart_compare);
+        layout3 = (LinearLayout) findViewById(R.id.chart_present);
+
         //get the user input message
         Intent intent = getIntent();
         String[] list_total = intent.getStringArrayExtra("RESULT_LIST");
@@ -67,9 +74,6 @@ public class SecondActivity extends Activity {
 
 
     public void showPresent(View view){
-        LinearLayout layout1 = (LinearLayout) findViewById(R.id.chart_future);
-        LinearLayout layout2 = (LinearLayout) findViewById(R.id.chart_compare);
-        LinearLayout layout3 = (LinearLayout) findViewById(R.id.chart_present);
         //let another two layout disappear
         layout1.setVisibility(View.INVISIBLE);
         layout2.setVisibility(View.INVISIBLE);
@@ -84,14 +88,11 @@ public class SecondActivity extends Activity {
         //create a string to display
         String msg_type="Description:\n This is the graph of "+type;
         String msg_graph=" in current time frame";
-        String msg_avg="\n This average "+type+" this month is "+avg;
+        String msg_avg="\n The average of "+type+" this month is "+avg;
         textView.setText(msg_type+msg_graph+msg_avg);
     }
 
     public void showFuture(View view){
-        LinearLayout layout1 = (LinearLayout) findViewById(R.id.chart_future);
-        LinearLayout layout2 = (LinearLayout) findViewById(R.id.chart_compare);
-        LinearLayout layout3 = (LinearLayout) findViewById(R.id.chart_present);
         //let another two layout disappear
         layout2.setVisibility(View.INVISIBLE);
         layout3.setVisibility(View.INVISIBLE);
@@ -102,14 +103,11 @@ public class SecondActivity extends Activity {
         //create a string to display
         String msg_type="Description:\n This is the graph of "+type;
         String msg_graph=" in future time frame";
-        String msg_avg="\n This average "+type+" this month is "+avg;
+        String msg_avg="\n The average of "+type+" this month is "+avg;
         textView.setText(msg_type+msg_graph+msg_avg);
     }
 
     public void showCompare(View view){
-        LinearLayout layout1 = (LinearLayout) findViewById(R.id.chart_future);
-        LinearLayout layout2 = (LinearLayout) findViewById(R.id.chart_compare);
-        LinearLayout layout3 = (LinearLayout) findViewById(R.id.chart_present);
         //let another two layout disappear
         layout1.setVisibility(View.INVISIBLE);
         layout3.setVisibility(View.INVISIBLE);
@@ -120,7 +118,7 @@ public class SecondActivity extends Activity {
         //create a string to display
         String msg_type="Description:\n This is the graph of "+type;
         String msg_graph=" in both time frame";
-        String msg_avg="\n This average "+type+" this month is "+avg;
+        String msg_avg="\n The average of "+type+" this month is "+avg;
         textView.setText(msg_type+msg_graph+msg_avg);
     }
 
@@ -158,6 +156,7 @@ public class SecondActivity extends Activity {
         multiRenderer.setYTitle("Value");
         multiRenderer.setZoomButtonsVisible(true);
         multiRenderer.addSeriesRenderer(renderer);
+        multiRenderer.setShowGrid(true);
 
         //graph number one lauyout defined
         View chart = ChartFactory.getLineChartView(getBaseContext(), Dataset, multiRenderer);
@@ -216,6 +215,7 @@ public class SecondActivity extends Activity {
         multiRenderer.setZoomButtonsVisible(true);
         multiRenderer.addSeriesRenderer(renderer);
         multiRenderer.addSeriesRenderer(renderer2);
+        multiRenderer.setShowGrid(true);
 
         //graph number one lauyout defined
         View chart = ChartFactory.getLineChartView(getBaseContext(), Dataset, multiRenderer);
