@@ -30,7 +30,7 @@ public class FindVal {
                 }
             }
         }
-        return "Data does not exist";
+        return "1";
     }
 
     //search through the dataset
@@ -45,6 +45,6 @@ public class FindVal {
                 }
             }
         }
-        return "Data does not exist";
+        return "1";
     }
 }

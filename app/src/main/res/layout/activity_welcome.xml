@@ -15,8 +15,6 @@
         android:textAppearance="?android:textAppearanceLarge"
 
         android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/selectTime"
-        android:layout_alignStart="@+id/selectTime"
         android:layout_marginTop="13dp" />
 
     <EditText
@@ -48,13 +46,23 @@
         />
 
     <Button
-        android:id="@+id/send"
+        android:id="@+id/sendTemp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="show"
-        android:onClick="sendMessage"
+        android:text="Mean Temperature"
+        android:onClick="sendTemp"
 
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/sendPreci"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Precipication"
+        android:onClick="sendPreci"
+
+        android:layout_above="@+id/sendTemp"
         android:layout_centerHorizontal="true" />
 
 

@@ -28,67 +28,33 @@ public class SecondActivity extends Activity {
         textView = (TextView)findViewById(R.id.info);
 
         setContentView(R.layout.second_layout);
-        //drawChart();
         //get the user input message
         Intent intent = getIntent();
-        String msg1 = intent.getStringExtra("DATE");
-        String msg3 = intent.getStringExtra("Model");
-        //get the corresponding value in the dataset
-        String result_temp = intent.getStringExtra("RESULT_TEMP");
-        String result_preci = intent.getStringExtra("RESULT_PRECI");
+        String[] list_total = intent.getStringArrayExtra("RESULT_LIST");
+        String[] list_future_total = intent.getStringArrayExtra("RESULT_FUTURE_LIST");
 
-        String[] temp_total = intent.getStringArrayExtra("RESULT_TEMP_LIST");
-        String[] preci_total = intent.getStringArrayExtra("RESULT_PRECI_LIST");
-        double[] temp_val = new double[10];
-        double[] preci_val = new double[10];
-        for(int i = 0;i<10;i++){
-            temp_val[i]= Double.parseDouble(temp_total[i]);
-            preci_val[i]= Double.parseDouble(preci_total[i]);
+        //parse the whole list into double list
+        double[] list_val = new double[7];
+        double[] list_future = new double[7];
+        for(int i = 0;i<7;i++){
+            list_val[i]= Double.parseDouble(list_total[i]);
+            list_future[i]=Double.parseDouble(list_future_total[i]);
         }
-        String temptotal = "";
-        String precitotal ="";
-        for(int i = 0;i<10;i++){
-            temptotal = temptotal+temp_total[i]+"\n";
-            precitotal = precitotal+preci_total[i]+"\n";
-        }
-        drawChart(temp_val,preci_val);
-        //formulize the whole string message
-        //String input_info = String.format("Input Information\nDate: %s\nTime Period: %s\nClimate Model: %s\n", msg1, msg2, msg3);
-        //String output_info = String.format("\nOutput Information\nMean temperature: %s\nPrecipitation: %s", result_temp, result_preci);
-        //String total_info = String.format("\n%s\n%s",temp_total,preci_total);
-        //create a textview variable of current window
-        //TextView textView = new TextView(this);
 
-        //set the size of the font
-        //textView.setTextSize(20);
-
-        //send the message to view
-        //textView.setText(temptotal+precitotal);
-        //setContentView(textView);
-
-        //setContentView(R.layout.second_layout);
-
-        //Error waiting to be fixed
-        //textView.setText("Description: This is the graph of data for ten years.");
+        draw2Chart(list_future,list_val);
     }
-    private void drawChart(double[] temperature, double[] precipitation) {
-        int[] x_values = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-        double[] y_values = temperature;
-        double[] y2_values = precipitation;
+    private void drawChart(double[] lst) {
+        int[] x_values = {1, 2, 3, 4, 5, 6, 7};
+        double[] y_values = lst;
 
-        //create two lines
-        XYSeries tempSeries = new XYSeries("Temp");
+        //create a line
+        XYSeries tempSeries = new XYSeries("Value");
         for (int i = 0; i < x_values.length; i++) {
             tempSeries.add(x_values[i], y_values[i]);
-        }
-        XYSeries preciSeries = new XYSeries("Preci");
-        for (int i = 0; i < x_values.length; i++) {
-            preciSeries.add(x_values[i], y2_values[i]);
         }
 
         XYMultipleSeriesDataset Dataset = new XYMultipleSeriesDataset();
         Dataset.addSeries(tempSeries);
-        Dataset.addSeries(preciSeries);
 
         //define the first line features
         XYSeriesRenderer renderer = new XYSeriesRenderer();
@@ -99,7 +65,56 @@ public class SecondActivity extends Activity {
         renderer.setDisplayChartValues(true);
         renderer.setChartValuesTextSize(30);
 
-        //define the second line features
+        //combine two liens and set feature for the whole
+        XYMultipleSeriesRenderer multiRenderer = new XYMultipleSeriesRenderer();
+        multiRenderer.setXLabels(10);
+        multiRenderer.setLabelsTextSize(36);
+        multiRenderer.setChartTitle("Following seven days");
+        multiRenderer.setChartTitleTextSize(72);
+        multiRenderer.setAxisTitleTextSize(48);
+        multiRenderer.setXTitle("7 days period");
+        multiRenderer.setYTitle("Value");
+        multiRenderer.setZoomButtonsVisible(true);
+        multiRenderer.addSeriesRenderer(renderer);
+
+        //graph number one lauyout defined
+        LinearLayout chartContainer = (LinearLayout) findViewById(R.id.chart_container);
+        View chart = ChartFactory.getLineChartView(getBaseContext(), Dataset, multiRenderer);
+        chartContainer.addView(chart);
+
+    }
+
+    private void draw2Chart(double[] lst, double[] lst2) {
+        int[] x_values = {1, 2, 3, 4, 5, 6, 7};
+        double[] y_values = lst;
+        double[] y2_values = lst2;
+
+        //create a line
+        XYSeries tempSeries = new XYSeries("Value");
+        for (int i = 0; i < x_values.length; i++) {
+            tempSeries.add(x_values[i], y_values[i]);
+        }
+
+        //create a line
+        XYSeries tempSeries2 = new XYSeries("Value2");
+        for (int i = 0; i < x_values.length; i++) {
+            tempSeries2.add(x_values[i], y2_values[i]);
+        }
+
+        XYMultipleSeriesDataset Dataset = new XYMultipleSeriesDataset();
+        Dataset.addSeries(tempSeries);
+        Dataset.addSeries(tempSeries2);
+
+        //define the first line features
+        XYSeriesRenderer renderer = new XYSeriesRenderer();
+        renderer.setColor(Color.RED);
+        renderer.setPointStyle(PointStyle.CIRCLE);
+        renderer.setFillPoints(true);
+        renderer.setLineWidth(3);
+        renderer.setDisplayChartValues(true);
+        renderer.setChartValuesTextSize(30);
+
+        //define the first line features
         XYSeriesRenderer renderer2 = new XYSeriesRenderer();
         renderer2.setColor(Color.BLUE);
         renderer2.setPointStyle(PointStyle.CIRCLE);
@@ -112,11 +127,11 @@ public class SecondActivity extends Activity {
         XYMultipleSeriesRenderer multiRenderer = new XYMultipleSeriesRenderer();
         multiRenderer.setXLabels(10);
         multiRenderer.setLabelsTextSize(36);
-        multiRenderer.setChartTitle("Temp/Precipitation Chart");
+        multiRenderer.setChartTitle("Following seven days");
         multiRenderer.setChartTitleTextSize(72);
         multiRenderer.setAxisTitleTextSize(48);
-        multiRenderer.setXTitle("10 year period");
-        multiRenderer.setYTitle("Temp/Precipitation");
+        multiRenderer.setXTitle("7 days period");
+        multiRenderer.setYTitle("Value");
         multiRenderer.setZoomButtonsVisible(true);
         multiRenderer.addSeriesRenderer(renderer);
         multiRenderer.addSeriesRenderer(renderer2);
