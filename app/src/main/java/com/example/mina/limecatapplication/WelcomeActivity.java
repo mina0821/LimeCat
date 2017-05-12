@@ -30,13 +30,10 @@ public class WelcomeActivity extends AppCompatActivity {
     EditText msg_text_month;
     EditText msg_text_year;
 
-    //define radio button variables
-    private RadioGroup radioModelGroup;
-
     //define firebase variables
     FirebaseStorage storage = FirebaseStorage.getInstance();
-    StorageReference storageRef = storage.getReferenceFromUrl("gs://limecatapplication.appspot.com/").child("meanTemp.csv");
-    StorageReference storageRef2 = storage.getReferenceFromUrl("gs://limecatapplication.appspot.com/").child("precipitation.csv");
+    StorageReference storageRef = storage.getReferenceFromUrl("gs://limecatapplication.appspot.com/").child("meanTemp_modelaverage.csv");
+    StorageReference storageRef2 = storage.getReferenceFromUrl("gs://limecatapplication.appspot.com/").child("precipitation_modelaverage.csv");
 
     //define variables to store the cloud dataset
     String next[] = {};
@@ -48,32 +45,13 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         //locate the textview box we want to show the result
-        textView = (TextView)findViewById(R.id.selectModel);
-
-        //add a listener to the radio button group
-        addListenerOnButton();
+        textView = (TextView)findViewById(R.id.datemsg);
 
         //read the file meanTemp.csv store in filebase
         readfile();
 
         //read the file precipication.csv store in the firebase
         readAnotherFile();
-    }
-
-    public void addListenerOnButton(){
-        radioModelGroup = (RadioGroup) findViewById(R.id.modelGroup);
-
-        //attach listener to radio group
-        radioModelGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                //get the right button which is clicked
-                RadioButton rb = (RadioButton) group.findViewById(checkedId);
-                if (null != rb && checkedId > -1){
-                    Toast.makeText(WelcomeActivity.this, rb.getText(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
 
     public void readfile(){
@@ -177,23 +155,19 @@ public class WelcomeActivity extends AppCompatActivity {
         //call second window
         Intent intent = new Intent(this,SecondActivity.class);
 
-
-        //get the selection of climate model
-        RadioButton rb2 = (RadioButton) radioModelGroup.findViewById(radioModelGroup.getCheckedRadioButtonId());
-        String model = (String) rb2.getText();
-
         //use FindVal module to find the corresponding value
         FindVal find = new FindVal(list_temp,list_preci);
 
         String[] presentstring = new String[7];
         String[] futurestring = new String[7];
         for(int i =0;i<7;i++){
-            presentstring[i] = find.searchTemp(msg7[i],model);
-            futurestring[i] = find.searchTemp(msg7_future[i],model);
+            presentstring[i] = find.searchTemp(msg7[i]);
+            futurestring[i] = find.searchTemp(msg7_future[i]);
         }
 
         intent.putExtra("RESULT_LIST",presentstring);
         intent.putExtra("RESULT_FUTURE_LIST",futurestring);
+        intent.putExtra("TYPE","mean temperature");
         //only for test purpose
         //textView.setText(r);
 
@@ -234,23 +208,19 @@ public class WelcomeActivity extends AppCompatActivity {
         //call second window
         Intent intent = new Intent(this,SecondActivity.class);
 
-
-        //get the selection of climate model
-        RadioButton rb2 = (RadioButton) radioModelGroup.findViewById(radioModelGroup.getCheckedRadioButtonId());
-        String model = (String) rb2.getText();
-
         //use FindVal module to find the corresponding value
         FindVal find = new FindVal(list_temp,list_preci);
 
         String[] presentstring = new String[7];
         String[] futurestring = new String[7];
         for(int i =0;i<7;i++){
-            presentstring[i] = find.searchPreci(msg7[i],model);
-            futurestring[i] = find.searchPreci(msg7_future[i],model);
+            presentstring[i] = find.searchPreci(msg7[i]);
+            futurestring[i] = find.searchPreci(msg7_future[i]);
         }
 
         intent.putExtra("RESULT_LIST",presentstring);
         intent.putExtra("RESULT_FUTURE_LIST",futurestring);
+        intent.putExtra("TYPE","precipitation");
         //only for test purpose
         //textView.setText(r);
 

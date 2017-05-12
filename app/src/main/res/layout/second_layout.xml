@@ -28,7 +28,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/Description"
+        android:id="@+id/descrip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/chart_present">
@@ -37,39 +37,38 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/info"
-            android:text="Description: This is the graph of data for seven days."
+            android:text="Description:"
             android:textAppearance="?android:textAppearanceLarge"
             />
-
     </LinearLayout>
 
 
     <Button
         android:id="@+id/present"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/Description"
+        android:layout_below="@+id/descrip"
         android:layout_centerHorizontal="true"
-        android:text="Present"
-        android:onClick="showPresent"/>
+        android:onClick="showPresent"
+        android:text="Present" />
 
     <Button
         android:id="@+id/future"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/present"
         android:layout_centerHorizontal="true"
-        android:text="Future"
-        android:onClick="showFuture"/>
+        android:onClick="showFuture"
+        android:text="Future" />
 
     <Button
         android:id="@+id/compare"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/future"
         android:layout_centerHorizontal="true"
-        android:text="Compare"
-        android:onClick="showCompare"/>
+        android:onClick="showCompare"
+        android:text="Compare" />
 
 
 </RelativeLayout>

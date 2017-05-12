@@ -47,80 +47,32 @@
 
     <Button
         android:id="@+id/sendTemp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Mean Temperature"
-        android:onClick="sendTemp"
+        android:layout_alignBottom="@+id/welcomePic"
+        android:layout_centerHorizontal="true"
 
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginBottom="32dp"
+        android:onClick="sendTemp"
+        android:text="Mean Temperature" />
 
     <Button
         android:id="@+id/sendPreci"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Precipication"
-        android:onClick="sendPreci"
-
-        android:layout_above="@+id/sendTemp"
-        android:layout_centerHorizontal="true" />
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Choose Climate Model:"
-        android:textAppearance="?android:textAppearanceLarge"
-        android:id="@+id/selectModel"
-
-        android:layout_below="@+id/msg_text_year"
-        />
-
-
-    <RadioGroup
-        android:id="@+id/modelGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/sendTemp"
+        android:layout_centerHorizontal="true"
 
-        android:layout_below="@+id/selectModel"
+        android:onClick="sendPreci"
+        android:text="Precipication" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/welcomePic"
+        app:srcCompat="@drawable/welcom"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-
-        <RadioButton
-            android:id="@+id/Can"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CanESM2"
-            />
-
-        <RadioButton
-            android:id="@+id/GFDL"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="GFDL-ESM2M"
-            />
-
-        <RadioButton
-            android:id="@+id/Had"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="HadGEM2-ES"
-            />
-
-        <RadioButton
-            android:id="@+id/IPSL"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="IPSL-CM5A-LA"
-            />
-
-        <RadioButton
-            android:id="@+id/MPI"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="MPI-ESM-MR"
-            />
-    </RadioGroup>
-
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

@@ -15,38 +15,48 @@ import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
+import java.io.FileReader;
+
+import au.com.bytecode.opencsv.CSVReader;
+
 
 public class SecondActivity extends Activity {
     //define textview and msg variables
     TextView textView;
     double[] list_val;
     double[] list_future;
+    String type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //locate the textview box we want to show the result
-        textView = (TextView)findViewById(R.id.info);
 
         setContentView(R.layout.second_layout);
         //get the user input message
         Intent intent = getIntent();
         String[] list_total = intent.getStringArrayExtra("RESULT_LIST");
         String[] list_future_total = intent.getStringArrayExtra("RESULT_FUTURE_LIST");
+        type = intent.getStringExtra("TYPE");
 
         //parse the whole list into double list
         list_val = new double[7];
         list_future = new double[7];
         for(int i = 0;i<7;i++){
-            list_val[i]= Double.parseDouble(list_total[i]);
-            list_future[i]=Double.parseDouble(list_future_total[i]);
+            String val = list_total[i];
+            String future = list_future_total[i];
+
+            list_val[i]= Double.parseDouble(val);
+            list_future[i]=Double.parseDouble(future);
         }
 
         //locate the linear layout we want to draw
         LinearLayout chartContainer = (LinearLayout) findViewById(R.id.chart_compare);
         //default setting: draw the comparision line
         draw2Chart(list_val,list_future,chartContainer);
+    }
+
+    public void readfile(){
+        //CSVReader reader = new CSVReader(new FileReader());
     }
 
     public void showPresent(View view){
@@ -58,7 +68,16 @@ public class SecondActivity extends Activity {
         layout2.setVisibility(View.INVISIBLE);
         //draw chart
         layout3.setVisibility(View.VISIBLE);
-        drawChart(list_val,layout3);
+        drawChart(list_val,layout3,Color.RED);
+
+
+        //locate the textview box we want to show the result
+        textView = (TextView)findViewById(R.id.info);
+
+        //create a string to display
+        String msg_type="Description:\n This is the graph of "+type;
+        String msg_graph="in current time frame";
+        textView.setText(msg_type+msg_graph);
     }
 
     public void showFuture(View view){
@@ -70,7 +89,12 @@ public class SecondActivity extends Activity {
         layout3.setVisibility(View.INVISIBLE);
         //draw chart
         layout1.setVisibility(View.VISIBLE);
-        drawChart(list_future,layout1);
+        drawChart(list_future,layout1,Color.BLUE);
+
+        //create a string to display
+        String msg_type="Description:\n This is the graph of "+type;
+        String msg_graph="in future time frame";
+        textView.setText(msg_type+msg_graph);
     }
 
     public void showCompare(View view){
@@ -83,10 +107,15 @@ public class SecondActivity extends Activity {
         //draw chart
         layout2.setVisibility(View.VISIBLE);
         draw2Chart(list_val,list_future,layout2);
+
+        //create a string to display
+        String msg_type="Description:\n This is the graph of "+type;
+        String msg_graph=" in both time frame";
+        textView.setText(msg_type+msg_graph);
     }
 
 
-    private void drawChart(double[] lst, LinearLayout lay) {
+    private void drawChart(double[] lst, LinearLayout lay,int cl) {
         int[] x_values = {1, 2, 3, 4, 5, 6, 7};
         double[] y_values = lst;
 
@@ -101,7 +130,7 @@ public class SecondActivity extends Activity {
 
         //define the first line features
         XYSeriesRenderer renderer = new XYSeriesRenderer();
-        renderer.setColor(Color.RED);
+        renderer.setColor(cl);
         renderer.setPointStyle(PointStyle.CIRCLE);
         renderer.setFillPoints(true);
         renderer.setLineWidth(3);

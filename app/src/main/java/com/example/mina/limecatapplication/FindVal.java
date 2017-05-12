@@ -19,30 +19,24 @@ public class FindVal {
     }
 
     //search through the dataset
-    public String searchTemp(String date, String model){
+    public String searchTemp(String date){
         //iterate each line of the list
         for (String[] line:list_temp){
             //check if date matches
             if (line[0].equals(date)){
-                //check if model types matches
-                if (line[3].equals(model)){
-                    return line[1];
-                }
+                return line[1];
             }
         }
         return "1";
     }
 
     //search through the dataset
-    public String searchPreci(String date, String model){
+    public String searchPreci(String date){
         //iterate each line of the list
         for (String[] line:list_preci){
             //check if date matches
             if (line[0].equals(date)){
-                //check if time period matches
-                if (line[3].equals(model)){
-                    return line[1];
-                }
+                return line[1];
             }
         }
         return "1";
