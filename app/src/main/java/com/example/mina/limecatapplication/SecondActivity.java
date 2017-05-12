@@ -19,6 +19,8 @@ import org.achartengine.renderer.XYSeriesRenderer;
 public class SecondActivity extends Activity {
     //define textview and msg variables
     TextView textView;
+    double[] list_val;
+    double[] list_future;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,16 +36,57 @@ public class SecondActivity extends Activity {
         String[] list_future_total = intent.getStringArrayExtra("RESULT_FUTURE_LIST");
 
         //parse the whole list into double list
-        double[] list_val = new double[7];
-        double[] list_future = new double[7];
+        list_val = new double[7];
+        list_future = new double[7];
         for(int i = 0;i<7;i++){
             list_val[i]= Double.parseDouble(list_total[i]);
             list_future[i]=Double.parseDouble(list_future_total[i]);
         }
 
-        draw2Chart(list_future,list_val);
+        //locate the linear layout we want to draw
+        LinearLayout chartContainer = (LinearLayout) findViewById(R.id.chart_compare);
+        //default setting: draw the comparision line
+        draw2Chart(list_val,list_future,chartContainer);
     }
-    private void drawChart(double[] lst) {
+
+    public void showPresent(View view){
+        LinearLayout layout1 = (LinearLayout) findViewById(R.id.chart_future);
+        LinearLayout layout2 = (LinearLayout) findViewById(R.id.chart_compare);
+        LinearLayout layout3 = (LinearLayout) findViewById(R.id.chart_present);
+        //let another two layout disappear
+        layout1.setVisibility(View.INVISIBLE);
+        layout2.setVisibility(View.INVISIBLE);
+        //draw chart
+        layout3.setVisibility(View.VISIBLE);
+        drawChart(list_val,layout3);
+    }
+
+    public void showFuture(View view){
+        LinearLayout layout1 = (LinearLayout) findViewById(R.id.chart_future);
+        LinearLayout layout2 = (LinearLayout) findViewById(R.id.chart_compare);
+        LinearLayout layout3 = (LinearLayout) findViewById(R.id.chart_present);
+        //let another two layout disappear
+        layout2.setVisibility(View.INVISIBLE);
+        layout3.setVisibility(View.INVISIBLE);
+        //draw chart
+        layout1.setVisibility(View.VISIBLE);
+        drawChart(list_future,layout1);
+    }
+
+    public void showCompare(View view){
+        LinearLayout layout1 = (LinearLayout) findViewById(R.id.chart_future);
+        LinearLayout layout2 = (LinearLayout) findViewById(R.id.chart_compare);
+        LinearLayout layout3 = (LinearLayout) findViewById(R.id.chart_present);
+        //let another two layout disappear
+        layout1.setVisibility(View.INVISIBLE);
+        layout3.setVisibility(View.INVISIBLE);
+        //draw chart
+        layout2.setVisibility(View.VISIBLE);
+        draw2Chart(list_val,list_future,layout2);
+    }
+
+
+    private void drawChart(double[] lst, LinearLayout lay) {
         int[] x_values = {1, 2, 3, 4, 5, 6, 7};
         double[] y_values = lst;
 
@@ -78,13 +121,12 @@ public class SecondActivity extends Activity {
         multiRenderer.addSeriesRenderer(renderer);
 
         //graph number one lauyout defined
-        LinearLayout chartContainer = (LinearLayout) findViewById(R.id.chart_container);
         View chart = ChartFactory.getLineChartView(getBaseContext(), Dataset, multiRenderer);
-        chartContainer.addView(chart);
+        lay.addView(chart);
 
     }
 
-    private void draw2Chart(double[] lst, double[] lst2) {
+    private void draw2Chart(double[] lst, double[] lst2, LinearLayout lay) {
         int[] x_values = {1, 2, 3, 4, 5, 6, 7};
         double[] y_values = lst;
         double[] y2_values = lst2;
@@ -137,9 +179,8 @@ public class SecondActivity extends Activity {
         multiRenderer.addSeriesRenderer(renderer2);
 
         //graph number one lauyout defined
-        LinearLayout chartContainer = (LinearLayout) findViewById(R.id.chart_container);
         View chart = ChartFactory.getLineChartView(getBaseContext(), Dataset, multiRenderer);
-        chartContainer.addView(chart);
+        lay.addView(chart);
 
     }
 

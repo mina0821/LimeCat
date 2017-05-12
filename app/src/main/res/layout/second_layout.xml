@@ -7,7 +7,21 @@
     tools:context="com.example.mina.limecatapplication.SecondActivity">
 
     <LinearLayout
-        android:id="@+id/chart_container"
+        android:id="@+id/chart_present"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp">
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/chart_future"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp">
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/chart_compare"
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="300dp">
@@ -17,7 +31,7 @@
         android:id="@+id/Description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/chart_container">
+        android:layout_below="@+id/chart_present">
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,6 +42,7 @@
             />
 
     </LinearLayout>
+
 
     <Button
         android:id="@+id/present"

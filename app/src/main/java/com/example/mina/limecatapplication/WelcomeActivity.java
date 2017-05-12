@@ -222,6 +222,15 @@ public class WelcomeActivity extends AppCompatActivity {
             msg7[i]=(Integer.parseInt(msg_date)+i)+"-"+msg_month+"-"+msg_year;
         }
 
+        //predict the data for future
+        //get the differences between selected year and 1986
+        Integer diff = Integer.parseInt(msg_year) - 1986;
+        //create an array to store the future data
+        String[] msg7_future =  new String[7];
+        for (int i=0; i<7; i++){
+            msg7_future[i]=msg_date+"-"+msg_month+"-"+(2040+diff+i);
+        }
+
         //call second window
         Intent intent = new Intent(this,SecondActivity.class);
 
@@ -233,14 +242,18 @@ public class WelcomeActivity extends AppCompatActivity {
         //use FindVal module to find the corresponding value
         FindVal find = new FindVal(list_temp,list_preci);
 
-        String[] tempstring = new String[7];
+        String[] presentstring = new String[7];
+        String[] futurestring = new String[7];
         for(int i =0;i<7;i++){
-            tempstring[i] = find.searchPreci(msg7[i],model);
+            presentstring[i] = find.searchPreci(msg7[i],model);
+            futurestring[i] = find.searchPreci(msg7_future[i],model);
         }
 
-        intent.putExtra("RESULT_LIST",tempstring);
+        intent.putExtra("RESULT_LIST",presentstring);
+        intent.putExtra("RESULT_FUTURE_LIST",futurestring);
         //only for test purpose
         //textView.setText(r);
+
 
         //start the activity
         startActivity(intent);
