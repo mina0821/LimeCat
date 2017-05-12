@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/info"
-            android:text="Description:"
+            android:text="Please select the time frame you want to show."
             android:textAppearance="?android:textAppearanceLarge"
             />
     </LinearLayout>
@@ -47,7 +47,7 @@
         android:id="@+id/present"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/descrip"
+        android:layout_above="@+id/future"
         android:layout_centerHorizontal="true"
         android:onClick="showPresent"
         android:text="Present" />
@@ -56,7 +56,7 @@
         android:id="@+id/future"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/present"
+        android:layout_above="@+id/compare"
         android:layout_centerHorizontal="true"
         android:onClick="showFuture"
         android:text="Future" />
@@ -65,10 +65,9 @@
         android:id="@+id/compare"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/future"
-        android:layout_centerHorizontal="true"
         android:onClick="showCompare"
-        android:text="Combine" />
+        android:text="Combine"
+        android:layout_alignParentBottom="true" />
 
 
 </RelativeLayout>

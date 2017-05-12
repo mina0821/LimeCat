@@ -201,6 +201,11 @@ public class WelcomeActivity extends AppCompatActivity {
 
         msg_text_month = (EditText)findViewById(R.id.msg_text_month);
         String msg_month = msg_text_month.getText().toString();
+        //bug fixed: 1 represents 01 in the dataset
+        String msg_month_zero = "0";
+        if (Integer.parseInt(msg_month)<10){
+            msg_month_zero = "0"+msg_month;
+        }
 
         msg_text_year = (EditText)findViewById(R.id.msg_text_year);
         String msg_year = msg_text_year.getText().toString();
@@ -209,7 +214,7 @@ public class WelcomeActivity extends AppCompatActivity {
         String[] msg7 = new String[7];
         for(int i=0;i<7;i++){
             //add the String of date
-            msg7[i]=(Integer.parseInt(msg_date)+i)+"-"+msg_month+"-"+msg_year;
+            msg7[i]=(Integer.parseInt(msg_date)+i)+"-"+msg_month_zero+"-"+msg_year;
         }
 
         //predict the data for future
@@ -218,7 +223,7 @@ public class WelcomeActivity extends AppCompatActivity {
         //create an array to store the future data
         String[] msg7_future =  new String[7];
         for (int i=0; i<7; i++){
-            msg7_future[i]=msg_date+"-"+msg_month+"-"+(2040+diff+i);
+            msg7_future[i]=msg_date+"-"+msg_month_zero+"-"+(2040+diff+i);
         }
 
         //call second window
@@ -255,6 +260,11 @@ public class WelcomeActivity extends AppCompatActivity {
 
         msg_text_month = (EditText)findViewById(R.id.msg_text_month);
         String msg_month = msg_text_month.getText().toString();
+        //bug fixed: 1 represents 01 in the dataset
+        String msg_month_zero="0";
+        if (Integer.parseInt(msg_month)<10){
+            msg_month_zero = "0"+msg_month;
+        }
 
         msg_text_year = (EditText)findViewById(R.id.msg_text_year);
         String msg_year = msg_text_year.getText().toString();
@@ -263,7 +273,7 @@ public class WelcomeActivity extends AppCompatActivity {
         String[] msg7 = new String[7];
         for(int i=0;i<7;i++){
             //add the String of date
-            msg7[i]=(Integer.parseInt(msg_date)+i)+"-"+msg_month+"-"+msg_year;
+            msg7[i]=(Integer.parseInt(msg_date)+i)+"-"+msg_month_zero+"-"+msg_year;
         }
 
         //predict the data for future
@@ -272,7 +282,7 @@ public class WelcomeActivity extends AppCompatActivity {
         //create an array to store the future data
         String[] msg7_future =  new String[7];
         for (int i=0; i<7; i++){
-            msg7_future[i]=msg_date+"-"+msg_month+"-"+(2040+diff+i);
+            msg7_future[i]=msg_date+"-"+msg_month_zero+"-"+(2040+diff+i);
         }
 
         //call second window

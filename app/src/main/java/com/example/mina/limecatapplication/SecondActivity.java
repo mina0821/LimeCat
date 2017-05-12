@@ -65,10 +65,8 @@ public class SecondActivity extends Activity {
             list_future[i]=Double.parseDouble(future);
         }
 
-        //locate the linear layout we want to draw
-        LinearLayout chartContainer = (LinearLayout) findViewById(R.id.chart_compare);
         //default setting: draw the comparision line
-        draw2Chart(list_val,list_future,chartContainer);
+        //draw2Chart(list_val,list_future,layout2);
     }
 
 
