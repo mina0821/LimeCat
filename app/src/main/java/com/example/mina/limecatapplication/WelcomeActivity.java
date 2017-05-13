@@ -202,7 +202,7 @@ public class WelcomeActivity extends AppCompatActivity {
         msg_text_month = (EditText)findViewById(R.id.msg_text_month);
         String msg_month = msg_text_month.getText().toString();
         //bug fixed: 1 represents 01 in the dataset
-        String msg_month_zero = "0";
+        String msg_month_zero = msg_month;
         if (Integer.parseInt(msg_month)<10){
             msg_month_zero = "0"+msg_month;
         }
@@ -223,7 +223,7 @@ public class WelcomeActivity extends AppCompatActivity {
         //create an array to store the future data
         String[] msg7_future =  new String[7];
         for (int i=0; i<7; i++){
-            msg7_future[i]=msg_date+"-"+msg_month_zero+"-"+(2040+diff+i);
+            msg7_future[i]=(Integer.parseInt(msg_date)+i)+"-"+msg_month_zero+"-"+(2040+diff);
         }
 
         //call second window
@@ -243,6 +243,7 @@ public class WelcomeActivity extends AppCompatActivity {
         intent.putExtra("RESULT_FUTURE_LIST",futurestring);
         intent.putExtra("TYPE","mean temperature");
         intent.putExtra("AVG",findAvgTemp(msg_month,msg_year));
+        intent.putExtra("AVG_FUTURE",findAvgTemp(msg_month,Integer.toString(2040+diff)));
         //only for test purpose
         //textView.setText(r);
 
@@ -261,7 +262,7 @@ public class WelcomeActivity extends AppCompatActivity {
         msg_text_month = (EditText)findViewById(R.id.msg_text_month);
         String msg_month = msg_text_month.getText().toString();
         //bug fixed: 1 represents 01 in the dataset
-        String msg_month_zero="0";
+        String msg_month_zero=msg_month;
         if (Integer.parseInt(msg_month)<10){
             msg_month_zero = "0"+msg_month;
         }
@@ -282,7 +283,7 @@ public class WelcomeActivity extends AppCompatActivity {
         //create an array to store the future data
         String[] msg7_future =  new String[7];
         for (int i=0; i<7; i++){
-            msg7_future[i]=msg_date+"-"+msg_month_zero+"-"+(2040+diff+i);
+            msg7_future[i]=(Integer.parseInt(msg_date)+i)+"-"+msg_month_zero+"-"+(2040+diff);
         }
 
         //call second window
@@ -302,6 +303,7 @@ public class WelcomeActivity extends AppCompatActivity {
         intent.putExtra("RESULT_FUTURE_LIST",futurestring);
         intent.putExtra("TYPE","precipitation");
         intent.putExtra("AVG",findAvgPreci(msg_month,msg_year));
+        intent.putExtra("AVG_FUTURE",findAvgPreci(msg_month,Integer.toString(2040+diff)));
 
         //only for test purpose
         //textView.setText(r);

@@ -33,6 +33,7 @@ public class SecondActivity extends Activity {
     double[] list_future;
     String type;
     String avg;
+    String avg_future;
     List<String[]> list_avg = new ArrayList<String[]>();
     LinearLayout layout1;
     LinearLayout layout2;
@@ -52,6 +53,7 @@ public class SecondActivity extends Activity {
         String[] list_total = intent.getStringArrayExtra("RESULT_LIST");
         String[] list_future_total = intent.getStringArrayExtra("RESULT_FUTURE_LIST");
         avg = intent.getStringExtra("AVG");
+        avg_future = intent.getStringExtra("AVG_FUTURE");
         type = intent.getStringExtra("TYPE");
 
         //parse the whole list into double list
@@ -86,7 +88,7 @@ public class SecondActivity extends Activity {
         //create a string to display
         String msg_type="Description:\n This is the graph of "+type;
         String msg_graph=" in current time frame";
-        String msg_avg="\n The average of "+type+" this month is "+avg;
+        String msg_avg="\n The average of "+type+" this month in current is "+avg;
         textView.setText(msg_type+msg_graph+msg_avg);
     }
 
@@ -101,7 +103,7 @@ public class SecondActivity extends Activity {
         //create a string to display
         String msg_type="Description:\n This is the graph of "+type;
         String msg_graph=" in future time frame";
-        String msg_avg="\n The average of "+type+" this month is "+avg;
+        String msg_avg="\n The average of "+type+" this month in future is "+avg_future;
         textView.setText(msg_type+msg_graph+msg_avg);
     }
 
@@ -116,8 +118,9 @@ public class SecondActivity extends Activity {
         //create a string to display
         String msg_type="Description:\n This is the graph of "+type;
         String msg_graph=" in both time frame";
-        String msg_avg="\n The average of "+type+" this month is "+avg;
-        textView.setText(msg_type+msg_graph+msg_avg);
+        String msg_avg="\n The average of "+type+" this month in cuerrent is "+avg;
+        String msg_2 = "\n The average of "+type+" this month in future is "+avg_future;
+        textView.setText(msg_type+msg_graph+msg_avg+msg_2);
     }
 
 
